@@ -1,4 +1,6 @@
+import DashboardContainer from "@/components/DashboardContainer";
 import Sidebar from "@/components/Sidebar";
+import SidebarAction from "@/components/SidebarAction";
 import { ReactNode } from "react";
 
 interface DashboardLayoutProps {
@@ -6,11 +8,13 @@ interface DashboardLayoutProps {
 }
 export default function DashboardLayout(props: DashboardLayoutProps) {
   return (
-    <main className="grid grid-cols-[280px_1fr] grid-rows-1 gap-5 p-5 min-h-screen">
+    <DashboardContainer
+    >
       <Sidebar />
-      <section className="bg-white rounded-2xl shadow-lg">
+      <section className="bg-white rounded-2xl shadow-lg overflow-hidden overflow-y-scroll h-full">
+        <SidebarAction />
         {props.children}
       </section>
-    </main>
+    </DashboardContainer>
   );
 }
