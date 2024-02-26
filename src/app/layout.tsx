@@ -5,6 +5,7 @@ import "./globals.css";
 import { Toaster } from "sonner";
 import NextTopLoader from "nextjs-toploader";
 import SidebarProvider from "@/data/contexts/SidebarContext";
+import Providers from "./providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,8 +24,10 @@ export default function RootLayout({
       <html lang="pt-br" data-theme="dark">
         <body className={`${inter.className} antialiased bodyBackground`}>
           <NextTopLoader height={5} color="#6691ff" />
-          <Toaster />
-          <SidebarProvider>{children}</SidebarProvider>
+          <Toaster richColors />
+          <Providers>
+            <SidebarProvider>{children}</SidebarProvider>
+          </Providers>
         </body>
       </html>
     </ClerkProvider>

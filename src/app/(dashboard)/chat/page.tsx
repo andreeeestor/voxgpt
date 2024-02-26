@@ -1,9 +1,11 @@
-interface ChatPageProps {
+import ChatStructure from "@/components/ChatStructure";
+import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query"
 
-}
-export default function ChatPage(props : ChatPageProps){
+export default function ChatPage(){
+    const queryClient = new QueryClient()
     return(
-        <main className="">
-        </main>
+        <HydrationBoundary state={dehydrate(queryClient)}>
+            <ChatStructure />
+        </HydrationBoundary>
     )
 }
