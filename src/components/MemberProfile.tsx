@@ -5,7 +5,7 @@ export default async function MemberProfile() {
   const user = await currentUser();
   // const {userId} =  auth()
   return (
-    <section className="flex items-center justify-center gap-x-2 ring-2 ring-gray-300/50 bg-gray-400/50 py-3 rounded-2xl shadow-2xl">
+    <section className="flex items-center justify-center gap-x-2 glass-darker py-3 rounded-2xl shadow-2xl">
       <UserButton afterSignOutUrl="/" />
       <UserInfo
         name={[user?.firstName, user?.lastName]}

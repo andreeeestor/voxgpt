@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="pt-br" data-theme="dark">
-        <body className={`${inter.className} antialiased bodyBackground`}>
+        <body className={`${inter.className} antialiased`}>
           <NextTopLoader height={5} color="#6691ff" />
           <Toaster richColors />
           <Providers>

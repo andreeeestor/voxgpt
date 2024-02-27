@@ -6,9 +6,15 @@ import ChatForm from "./ChatForm";
 import { toast } from "sonner";
 
 interface ChatStructureProps {}
+
+interface Message {
+  role: string;
+  content: string;
+}
+
 export default function ChatStructure(props: ChatStructureProps) {
   const [text, setText] = useState("");
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<Message[]>([]);
 
   const { mutate, isPending } = useMutation({
     mutationFn: (query: any) => generateChatResponse([...messages, query]),

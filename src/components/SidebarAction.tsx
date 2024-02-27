@@ -15,7 +15,7 @@ export default function SidebarAction() {
   return (
     <div className="fixed top-1/2 translate-x-4 z-40">
       <div
-        className="flex flex-col group transition-all cursor-pointer tooltip tooltip-right"
+        className="flex flex-col group transition-all cursor-pointer tooltip tooltip-right tooltip-primary"
         data-tip={`${isSidebarOpen ? "Fechar" : "Abrir"} Menu`}
         onClick={toggleSidebarState}
       >
