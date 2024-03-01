@@ -1,6 +1,6 @@
-import DashboardContainer from "@/components/DashboardContainer";
-import Sidebar from "@/components/Sidebar";
-import SidebarAction from "@/components/SidebarAction";
+import DashboardContainer from "@/components/template/DashboardContainer";
+import Sidebar from "@/components/template/Sidebar";
+import SidebarAction from "@/components/template/SidebarAction";
 import { ReactNode } from "react";
 
 interface DashboardLayoutProps {

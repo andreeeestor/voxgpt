@@ -4,6 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import ChatForm from "./ChatForm";
 import { toast } from "sonner";
+import ChatMessage from "./ChatMessage";
 
 interface ChatStructureProps {}
 
@@ -44,6 +45,7 @@ export default function ChatStructure(props: ChatStructureProps) {
         {/* {messages.map(({role,content}, index) => {
 
         })} */}
+        <ChatMessage />
         {isPending ? <span className="loading"></span> : null}
       </section>
       <ChatForm
