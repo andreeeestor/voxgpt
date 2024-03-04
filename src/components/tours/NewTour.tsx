@@ -10,12 +10,23 @@ import { toast } from "sonner";
 import TourInfo from "./TourInfo";
 
 export default function NewTour() {
-  const {mutate, isPending, data: tour} = useMutation({
+  const queryClient = useQueryClient();
+  const {
+    mutate,
+    isPending,
+    data: tour,
+  } = useMutation({
     mutationFn: async (destination: any) => {
+      const existingTour = await getExistingTours(destination);
+      if (existingTour) return existingTour;
       const newTour = await generateTourResponse(destination);
       if (newTour) {
+        const response = await createNewTour(newTour);
+        console.log(response)
+        queryClient.invalidateQueries({ queryKey: ["tours"] });
         return newTour;
       }
+      console.log(newTour);
       toast.error("Nenhuma cidade foi achada...");
       return null;
     },
@@ -26,11 +37,16 @@ export default function NewTour() {
     const formData = new FormData(e.currentTarget);
     const destination = Object.fromEntries(formData.entries());
     mutate(destination);
+    console.log(FormData)
+    console.log(destination)
+    console.log()
   };
 
-  if(isPending){
-    return <span className="loading loading-lg">Carregando...</span>
+  if (isPending) {
+    return <span className="loading loading-lg">Carregando...</span>;
   }
+
+
 
   return (
     <>
@@ -57,9 +73,7 @@ export default function NewTour() {
           </button>
         </div>
       </form>
-      <div className="mt-16">
-        {tour && <TourInfo tour={tour} />} 
-        </div>
+      <div className="mt-16">{tour && <TourInfo tour={tour} />}</div>
     </>
   );
 }

@@ -9,21 +9,22 @@ interface ChatFormProps {
 }
 export default function ChatForm(props: ChatFormProps) {
   return (
-    <form onSubmit={props.onSubmit} className="relative max-w-[1440px] mx-auto">
+    <form onSubmit={props.onSubmit} className="relative">
       <input
         type="text"
-        className="px-3 h-14 shadow-2xl outline-none border-none rounded-xl text-sm"
+        className="max-h-25 py-[10px] pr-10 md:py-3.5 md:pr-12 placeholder-slate-600 pl-3 md:pl-4 focus:ring-2 ring-1 ring-slate-600 outline-none rounded-xl text-sm w-full bg-transparent shadow-md"
+        placeholder="Digite uma mensagem..."
         value={props.value}
         onChange={props.onChange}
       />
       <button
-        className="absolute right-0 translate-y-[10px] -translate-x-3 px-3 py-2 rounded-xl btn-secondary cursor-pointer transition-all hover:opacity-85"
+        className="absolute bottom-1.5 right-2 rounded-lg bg-primary p-2 transition-all hover:opacity-85"
         disabled={props.disabled}
       >
         {props.disabled ? (
-          <Lucide.Loader size={20} color="white" />
+          <Lucide.Loader size={20} color="black" />
         ) : (
-          <Lucide.Send size={20} color="white" />
+          <Lucide.ArrowUp size={20} color="black" />
         )}
       </button>
     </form>

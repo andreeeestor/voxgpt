@@ -1,5 +1,6 @@
 "use server";
 import OpenAI from "openai";
+import prisma from "./db";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -29,6 +30,7 @@ interface TourActions {
   city: string;
   country: string;
   tour: string;
+  stops: string[]
 }
 
 export const getExistingTours = async (props: TourActions) => {
@@ -70,4 +72,35 @@ export const generateTourResponse = async (props: TourActions) => {
 
 export const createNewTour = async (props: TourActions) => {
   return null;
+};
+
+export const getAllTours = async (searchTerm: string) => {
+  if (!searchTerm) {
+    const tours = await prisma.tour.findMany({
+      orderBy: {
+        city: 'asc',
+      },
+    });
+    return tours;
+  }
+  const tours = await prisma.tour.findMany({
+    where: {
+      OR: [
+        {
+          city: {
+            contains: searchTerm,
+          },
+        },
+        {
+          country: {
+            contains: searchTerm,
+          },
+        },
+      ],
+    },
+    orderBy: {
+      city: 'asc',
+    },
+  });
+  return tours;
 };

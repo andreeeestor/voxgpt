@@ -13,7 +13,9 @@ export default function DashboardLayout(props: DashboardLayoutProps) {
       <Sidebar />
       <section className="rounded-2xl shadow-lg overflow-hidden overflow-y-scroll h-full bg-neutral">
         <SidebarAction />
+        <main className="p-5 pl-10 max-w-[1440px] mx-auto">
         {props.children}
+        </main>
       </section>
     </DashboardContainer>
   );

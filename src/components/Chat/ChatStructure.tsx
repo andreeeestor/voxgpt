@@ -25,27 +25,24 @@ export default function ChatStructure(props: ChatStructureProps) {
         return;
       }
       setMessages((prev) => [...prev, data]);
-
     },
   });
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    // setMessages((prev) => [...prev, { text, user: 'user' }])
     const query = { role: "user", content: text };
     mutate(query);
     setMessages((prev) => [...prev, query]);
     setText("");
   };
-  console.log(messages)
+  console.log(messages);
 
   return (
-    <main className="grid grid-cols-1 grid-rows-[1fr_auto] w-full h-full pb-4">
-      <section className="">
-        {/* {messages.map(({role,content}, index) => {
-
-        })} */}
-        <ChatMessage />
+    <main className="min-h-[calc(100vh-5rem)] grid grid-rows-[1fr_auto]">
+      <section className="space-y-12">
+        {messages.map(({ role, content }, index) => (
+          <ChatMessage role={role} content={content} key={index} />
+        ))}
         {isPending ? <span className="loading"></span> : null}
       </section>
       <ChatForm
