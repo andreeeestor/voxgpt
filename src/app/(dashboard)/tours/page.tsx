@@ -7,7 +7,7 @@ export default async function AllToursPage(){
 
     await queryClient.prefetchQuery({
         queryKey: ['tours'],
-        queryFn: () => getAllTours(),
+        // queryFn: () => getAllTours(),
     })
     return(
         <HydrationBoundary state={dehydrate(queryClient)}>
