@@ -1,16 +1,10 @@
 "use server";
 import OpenAI from "openai";
 import prisma from "./db";
-import { Prisma } from "@prisma/client";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
-
-interface ChatMessages {
-  role: string;
-  content: string;
-}
 
 interface TourResponse {
   tour: {
@@ -39,8 +33,11 @@ export const generateChatResponse = async (chatMessages: any) => {
   try {
     const response = await openai.chat.completions.create({
       messages: [
-        // dps muda o content
-        { role: "system", content: "você é uma assistente útil" },
+        {
+          role: "system",
+          content:
+            "O seu nome é Vox. Uma IA incrivelmente inteligente, útil, carismática e de pensamento rápido feita pela 'Bon Voyage!' que serve para ajudar o usuário a explorar tudo relacionado a viagens apenas, tornando sua experiência mais conveniente e eficiente.",
+        },
         ...chatMessages,
       ],
       model: "gpt-3.5-turbo",
@@ -55,14 +52,13 @@ export const generateChatResponse = async (chatMessages: any) => {
   }
 };
 
-interface TourActions {
+export const getExistingTours = async ({
+  city,
+  country,
+}: {
   city: string;
   country: string;
-  tour: string;
-  stops: string[];
-}
-
-export const getExistingTours = async ({ city, country }: { city: string, country: string }) => {
+}) => {
   return prisma.tour.findUnique({
     where: {
       city_country: {
@@ -73,7 +69,13 @@ export const getExistingTours = async ({ city, country }: { city: string, countr
   });
 };
 
-export const generateTourResponse = async ({ city, country }: { city: string, country: string }) => {
+export const generateTourResponse = async ({
+  city,
+  country,
+}: {
+  city: string;
+  country: string;
+}) => {
   const query = `Encontre a ${city} nessa ${country}. 
   Se ${city} não existir, crie uma lista de atividades que famílias possam fazer em ${city}, ${country}.
   Assim que você tiver a lista, crie um tour de um único dia. Resposta deve estar no seguinte formato JSON:
@@ -91,12 +93,14 @@ export const generateTourResponse = async ({ city, country }: { city: string, co
     const response = await openai.chat.completions.create({
       messages: [
         { role: "system", content: "você é um guia turístico" },
-        { role: "user", content: query, },
+        { role: "user", content: query },
       ],
       model: "gpt-3.5-turbo",
       temperature: 0,
     });
-    const tourData: TourResponse = JSON.parse(response.choices[0].message.content!);
+    const tourData: TourResponse = JSON.parse(
+      response.choices[0].message.content!
+    );
     if (!tourData.tour) {
       return null;
     }
@@ -111,11 +115,11 @@ export const generateTourResponse = async ({ city, country }: { city: string, co
 
 export const createNewTour = async (tour: Tour) => {
   return prisma.tour.create({
-    data: tour
+    data: tour,
   });
 };
 
-export const getAllTours = async ({searchTerm}: SearchTerm) => {
+export const getAllTours = async (searchTerm?: string) => {
   if (!searchTerm) {
     const tours = await prisma.tour.findMany({
       orderBy: {
@@ -153,3 +157,13 @@ export const getSingleTour = async (id: string) => {
     },
   });
 };
+
+// export const fetchUserTokensById = async (clerkId: string) => {
+//   const result = await prisma.token.findUnique({
+//     where: {
+//       clerkId,
+//     },
+//   });
+
+//   return result?.tokens
+// };
