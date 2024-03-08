@@ -39,7 +39,6 @@ export default function NewTour() {
     mutate(destination);
     console.log(FormData)
     console.log(destination)
-    console.log()
   };
 
   if (isPending) {

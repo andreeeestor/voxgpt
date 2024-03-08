@@ -16,6 +16,7 @@ export default function ChatForm(props: ChatFormProps) {
         placeholder="Digite uma mensagem..."
         value={props.value}
         onChange={props.onChange}
+        required
       />
       <button
         className="absolute bottom-1.5 right-2 rounded-lg bg-primary p-2 transition-all hover:opacity-85"
